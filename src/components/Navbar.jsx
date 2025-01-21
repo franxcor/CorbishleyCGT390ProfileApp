@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navbar = () => {
     return (
-        <div style={navbarStyles.navBarDiv}>
+        <div style={{marginLeft: '-30px', ...navbarStyles.navBarDiv}}>
             <a href="#" style={ navbarStyles.links}>Home</a>
             <a href="#"  style={ navbarStyles.links}>About</a>
             <a href="#"  style={ navbarStyles.links}>About</a>

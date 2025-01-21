@@ -28,6 +28,6 @@ export default App;
 const appStyle = {
   profileCards : {
     display: 'flex',
-    marginLeft: '400px',
+    justifyContent: 'center',
   }
 }

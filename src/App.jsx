@@ -3,6 +3,7 @@ import ProfileCard from './components/ProfileCard.jsx'
 import Navbar from './components/Navbar.jsx'
 import About from './components/About.jsx'
 import './styles/App.css'
+import Wrapper from './components/Wrapper.jsx'
 
 import ReginaImage from './assets/regina.jpg'
 import CadyImage from './assets/cady.jpg'
@@ -26,12 +27,12 @@ function App() {
 
   return (
     <div className = "section">
-      <div>
+      <Wrapper>
         <Navbar></Navbar>
-      </div>
-      <div>
+      </Wrapper>
+      <Wrapper>
         <About></About>
-      </div>
+      </Wrapper>
       <div className = "profileCardContainer" style={appStyle.profileCards}>
 
          {profiles.map(profile => <ProfileCard key= {profile.Email} {...profile}/>)}

@@ -10,6 +10,16 @@ import CadyImage from './assets/cady.jpg'
 
 function App() {
 
+  const [clicked, setClicked] = useState(false)
+  const handleClick = () => {
+    if (clicked) {
+      setClicked(false);
+    } else {
+      setClicked(true);
+    }
+
+    
+  }
   const profiles = [
     {
       img: ReginaImage,
@@ -32,6 +42,7 @@ function App() {
       </Wrapper>
       <Wrapper>
         <About></About>
+        <button onClick = {handleClick}>{clicked ? "checked" : "unchecked"}</button>
       </Wrapper>
       <div className = "profileCardContainer" style={appStyle.profileCards}>
 

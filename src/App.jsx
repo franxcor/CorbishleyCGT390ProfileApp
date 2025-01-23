@@ -4,8 +4,8 @@ import Navbar from './components/Navbar.jsx'
 import About from './components/About.jsx'
 import './styles/App.css'
 
-import ReginaImage from './assets/img/regina.jpg'
-import CadyImage from './assets/img/cady.jpg'
+import ReginaImage from './assets/regina.jpg'
+import CadyImage from './assets/cady.jpg'
 
 function App() {
 

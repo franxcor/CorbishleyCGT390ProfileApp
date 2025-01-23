@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
+import ReginaProfile from './../assets/regina.jpg'
 
-const ProfileCard = ({img, Name, Email, Role}) => {
+const ProfileCard1 = () => {
+    const Name = "Regina George";
+    const Email = "regina@gmail.com"
+    const Role = "Mean Girl 1";
     return (
         <div className="profileCard" style={ProfileCardStyle.body}>
             <div className = "profileImgContainer" style={ProfileCardStyle.profileImgContainer}>
-                <img src={img} alt={Name} style={ProfileCardStyle.profileImg}/>
+                <img src={ReginaProfile} alt={Name} style={ProfileCardStyle.profileImg}/>
             </div>
             <div className = "profileInfoContainer">
                 <h2 style={ProfileCardStyle.name}>{Name}</h2>
@@ -15,16 +18,7 @@ const ProfileCard = ({img, Name, Email, Role}) => {
     );
 }
 
-ProfileCard.PropTypes = {
-    Name: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    Role: PropTypes.string.isRequired,
-
-}
-
-
-export default ProfileCard;
+export default ProfileCard1;
 
 const ProfileCardStyle = {
     body: {

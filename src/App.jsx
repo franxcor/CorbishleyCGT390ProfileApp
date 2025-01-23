@@ -1,11 +1,28 @@
 import { useState } from 'react'
 import ProfileCard from './components/ProfileCard.jsx'
-import ProfileCard2 from './components/ProfileCard2.jsx'
 import Navbar from './components/Navbar.jsx'
 import About from './components/About.jsx'
 import './styles/App.css'
 
+import ReginaImage from './assets/img/regina.jpg'
+import CadyImage from './assets/img/cady.jpg'
+
 function App() {
+
+  const profiles = [
+    {
+      img: ReginaImage,
+      Name: "Regina George",
+      Email: "regina@gmail.com",
+      Role: "Mean Girl 1"
+    },
+    {
+      img: CadyImage,
+      Name: "Cady Heron",
+      Email: "cady@gmail.com",
+      Role: "Mean Girl 2"
+    }
+  ]
 
   return (
     <div className = "section">
@@ -16,8 +33,10 @@ function App() {
         <About></About>
       </div>
       <div className = "profileCardContainer" style={appStyle.profileCards}>
-        <ProfileCard></ProfileCard>
-        <ProfileCard2></ProfileCard2>
+
+         {profiles.map(profile => <ProfileCard key= {profile.Email} {...profile}/>)}
+        {/*{profiles.map(profile => <ProfileCard key= {profile.Email} img = {profile.img} Name = {profile.Name} Email = {profile.Email} role = {profile.Role}></ProfileCard>)}*/}
+        
       </div>
     </div>
   )

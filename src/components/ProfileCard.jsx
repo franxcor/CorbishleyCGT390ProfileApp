@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const ProfileCard = ({img, Name, Email, Role}) => {
+const ProfileCard = ({img, Name, Email, title}) => {
     return (
         <div className="profileCard" style={ProfileCardStyle.body}>
             <div className = "profileImgContainer" style={ProfileCardStyle.profileImgContainer}>
@@ -8,18 +8,18 @@ const ProfileCard = ({img, Name, Email, Role}) => {
             </div>
             <div className = "profileInfoContainer">
                 <h2 style={ProfileCardStyle.name}>{Name}</h2>
-                <p>{Role} <br></br> {Email}</p>
+                <p>{title} <br></br> {Email}</p>
             </div>
             
          </div>
     );
 }
 
-ProfileCard.PropTypes = {
+ProfileCard.propTypes = {
     Name: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
-    Role: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
 
 }
 

@@ -1,26 +1,15 @@
-import React from 'react'
+import React from 'react';
+import style from '../styles/navBar.module.css';
 
-const Navbar = () => {
+const Navbar = ({switchMode, darkMode}) => {
     return (
-        <div style={{marginLeft: '-30px', ...navbarStyles.navBarDiv}}>
-            <a href="#" style={ navbarStyles.links}>Home</a>
-            <a href="#"  style={ navbarStyles.links}>About</a>
-            <a href="#"  style={ navbarStyles.links}>About</a>
+        <div className={`${style["navBarDiv"]} ${darkMode ? style["darkMode"] : ""}`}>
+            <a href="#" className={`${style["links"]} ${darkMode ? style["darkMode"] : ""}`}>Home</a>
+            <a href="#" className={`${style["links"]} ${darkMode ? style["darkMode"] : ""}`}>About</a>
+            <a href="#" className={`${style["links"]} ${darkMode ? style["darkMode"] : ""}`}>Other</a>
+            <button className={`${style["button"]} ${darkMode ? style["darkMode"] : ""}`} onClick={switchMode}>Switch Mode</button>
         </div>
     );
 };
 export default Navbar;
 
-
-const navbarStyles = {
-    links : {
-        color: 'black',
-        fontSize: '16px',
-        marginLeft: '40px'
-    },
-    navBarDiv : {
-        backgroundColor: 'lightpink',
-        width: '100%',
-        padding: '25px', 
-    },
-};

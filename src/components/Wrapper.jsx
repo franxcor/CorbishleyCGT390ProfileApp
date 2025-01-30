@@ -1,7 +1,8 @@
+import style from '../styles/wrapper.module.css';
 
 // using to replace other divs
-const Wrapper = ({children}) => {
-    return <div className = "section"> <div className = "container"> {children} </div> </div>
+const Wrapper = ({children, mode}) => {
+    return <div className={`${style["section"]} ${mode ? style["darkMode"]: ""}`}> <div className={style["container"]}> {children} </div> </div>
 }
 
 export default Wrapper;

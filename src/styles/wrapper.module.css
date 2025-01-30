@@ -1,0 +1,13 @@
+.section {
+    &.darkMode {
+        background-color: #795b7a;
+        color: white;
+    };
+    background-color: papayawhip;
+    padding: 0px;
+    margin: 0px;
+}
+.container {
+    margin: 0px;
+    padding: 0px;
+}

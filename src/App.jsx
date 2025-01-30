@@ -7,8 +7,19 @@ import Wrapper from './components/Wrapper.jsx'
 
 import ReginaImage from './assets/regina.jpg'
 import CadyImage from './assets/cady.jpg'
+import KarenImage from './assets/karen.jpg'
+import GretchenImage from './assets/gretchen.jpg'
 
 function App() {
+  const [mode, setMode] = useState(false);
+  const switchMode = () => {
+    if (mode) {
+      setMode(false);
+    } else {
+      setMode(true)
+    }
+    console.log(mode);
+  }
 
   const [clicked, setClicked] = useState(false)
   const handleClick = () => {
@@ -34,18 +45,20 @@ function App() {
       title: "Mean Girl 2"
     },
     {
-      img: ReginaImage,
-      Name: "Regina George 2",
-      Email: "regina2@gmail.com",
+      img: GretchenImage,
+      Name: "Gretchen Weiners",
+      Email: "gretchen@gmail.com",
       title: "Mean Girl 3"
     },
     {
-      img: CadyImage,
-      Name: "Cady Heron 2",
-      Email: "cady2@gmail.com",
+      img: KarenImage,
+      Name: "Karen Smith",
+      Email: "karen@gmail.com",
       title: "Mean Girl 4"
     }
   ]
+
+  const [animation, setAnimation] = useState(false);
 
   //get titles
   const titles=[...new Set(profiles.map((profile) => profile.title))];
@@ -57,16 +70,23 @@ function App() {
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
     console.log(filteredProfiles);
+    setAnimation(true);
   };
+
+  const handleAnimation = (event) => {
+    setAnimation(false);
+  }
 
   const [name, setName] = useState("");
   const handleNameChange = (event) => {
     setName(event.target.value);
+    setAnimation(true);
   }
 
   const handleClear = () => {
     setTitle("");
     setName("");
+    setAnimation(true);
   }
 
   const filteredProfiles = profiles.filter((profile) => {
@@ -81,13 +101,13 @@ function App() {
   return (
     <div className = "section">
       <Wrapper>
-        <Navbar></Navbar>
+        <Navbar darkMode={mode} switchMode={switchMode}></Navbar>
       </Wrapper>
-      <Wrapper>
+      <Wrapper mode={mode}>
         <About></About>
         <button onClick = {handleClick}>{clicked ? "checked" : "unchecked"}</button>
       </Wrapper>
-      <Wrapper>
+      <Wrapper mode={mode}>
         <div className="filter-wrapper" style={{display: 'flex', justifyContent: 'center'}}>
           <div className="filter-select" style={{padding: '15px'}}>
             <label htmlFor='title-select'>Select a Title:</label>
@@ -110,7 +130,9 @@ function App() {
 
         <div className = "profileCardContainer" style={appStyle.profileCards}>
 
-          {filteredProfiles.map(profile => <ProfileCard key={profile.Email} {...profile}/>)} 
+          {filteredProfiles.map(profile => 
+          <ProfileCard key={profile.Email} {...profile} animate={animation} updateAnimate={handleAnimation} darkMode={mode}/>
+          )} 
          
           {/*{profiles.map(profile => <ProfileCard key= {profile.Email} img = {profile.img} Name = {profile.Name} Email = {profile.Email} role = {profile.Role}></ProfileCard>)}*/}
 

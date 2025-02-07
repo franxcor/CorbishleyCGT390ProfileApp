@@ -2,6 +2,7 @@ import { useState } from "react";
 const ProfileForm = () => {
   const [data, setData] = useState({ name: "", title: "", email: "", bio: "", image: null });
   const [errors, setErrors] = useState({image: "", general: ""});
+  const [submitting, setSubmitting] = useState(false);
   const handleInput = (e) => {
     if(e.target.name == "image") {
         const imageFile = e.target.files[0];
@@ -17,6 +18,7 @@ const ProfileForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target); //form data object -> console.log(formData.get("name"));
+    setSubmitting(true);
     //sanitizing inputs 
     formData.append("name", data.name.trim());
     formData.append("email", data.email.trim());
@@ -80,7 +82,7 @@ const ProfileForm = () => {
       <label htmlFor="image">Choose a Profile Picture:</label>
       <input type="file" id="image" name="image" required accept="image/png, image/jpeg, image/jpg" onChange={handleInput}/>
       {errors.image && <p>{errors.image}</p>}
-      <button type="submit" disabled={submitting || errors.image === ""|| data.name  === "" || data.bio  === "" || data.email  === "" || data.title  === "" || data.image===null ? true: false}>Submit</button>
+      <button type="submit" disabled={submitting || errors.image !== ""|| data.name  === "" || data.bio  === "" || data.email  === "" || data.title  === "" || data.image===null ? true: false}>Submit</button>
       {errors.general && <p>{errors.general}</p>}
     </form>
   );

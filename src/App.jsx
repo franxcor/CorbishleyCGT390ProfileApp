@@ -4,6 +4,7 @@ import Navbar from './components/Navbar.jsx'
 import About from './components/About.jsx'
 import './styles/App.css'
 import Wrapper from './components/Wrapper.jsx'
+import ProfileForm from './components/ProfileForm.jsx'
 
 import ReginaImage from './assets/regina.jpg'
 import CadyImage from './assets/cady.jpg'
@@ -106,6 +107,9 @@ function App() {
       <Wrapper mode={mode}>
         <About></About>
         <button onClick = {handleClick}>{clicked ? "checked" : "unchecked"}</button>
+      </Wrapper>
+      <Wrapper>
+        <ProfileForm></ProfileForm>
       </Wrapper>
       <Wrapper mode={mode}>
         <div className="filter-wrapper" style={{display: 'flex', justifyContent: 'center'}}>

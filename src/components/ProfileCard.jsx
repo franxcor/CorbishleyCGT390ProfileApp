@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import style from '../styles/card.module.css';
 
-const ProfileCard = ({img, Name, Email, title, animate, updateAnimate, darkMode}) => {
+const ProfileCard = ({image_url, name, email, title, animate, updateAnimate, darkMode}) => {
     return (
         <div className={`${animate ? style["is-entering"] : "" }`}
         onAnimationEnd={updateAnimate}>
             <div className={`${style["profileImgContainer"]} ${darkMode ? style["darkMode"] : ""}`}>
-                <img src={img} alt={Name} className={style.profileImg}/>
+                <img src={image_url} alt={name} className={style.profileImg}/>
                 <div className ={style["profileInfoContainer"]}>
-                    <h2 className ={style.profileName}>{Name}</h2>
-                    <p>{title} <br></br> {Email}</p>
+                    <h2 className ={style.profileName}>{name}</h2>
+                    <p>{title} <br></br> {email}</p>
                 </div>
             </div>
             
@@ -18,9 +18,9 @@ const ProfileCard = ({img, Name, Email, title, animate, updateAnimate, darkMode}
 };
 
 ProfileCard.propTypes = {
-    Name: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    image_url: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
 
 }

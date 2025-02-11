@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ProfileCard from './components/ProfileCard.jsx'
 import Navbar from './components/Navbar.jsx'
 import About from './components/About.jsx'
@@ -32,32 +32,15 @@ function App() {
 
     
   }
-  const profiles = [
-    {
-      img: ReginaImage,
-      Name: "Regina George",
-      Email: "regina@gmail.com",
-      title: "Mean Girl 1"
-    },
-    {
-      img: CadyImage,
-      Name: "Cady Heron",
-      Email: "cady@gmail.com",
-      title: "Mean Girl 2"
-    },
-    {
-      img: GretchenImage,
-      Name: "Gretchen Weiners",
-      Email: "gretchen@gmail.com",
-      title: "Mean Girl 3"
-    },
-    {
-      img: KarenImage,
-      Name: "Karen Smith",
-      Email: "karen@gmail.com",
-      title: "Mean Girl 4"
-    }
-  ]
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    fetch('https://web.ics.purdue.edu/~fcorbish/CGT390ProfileApp/fetch-data.php')
+    .then((res) => res.json())
+    .then((data) => {
+      setProfiles(data);
+      console.log(data)
+    });
+  }, []);
 
   const [animation, setAnimation] = useState(false);
 
@@ -96,7 +79,7 @@ function App() {
     // } else {
     //   return profile.title === title;
     // }
-    return (title === "" || profile.title === title) && (profile.Name.toLowerCase().includes(name.toLowerCase())); //one liner
+    return (title === "" || profile.title === title) && (profile.name.toLowerCase().includes(name.toLowerCase())); //one liner
   })
 
   return (
@@ -135,7 +118,7 @@ function App() {
         <div className = "profileCardContainer" style={appStyle.profileCards}>
 
           {filteredProfiles.map(profile => 
-          <ProfileCard key={profile.Email} {...profile} animate={animation} updateAnimate={handleAnimation} darkMode={mode}/>
+          <ProfileCard key={profile.id} {...profile} animate={animation} updateAnimate={handleAnimation} darkMode={mode}/>
           )} 
          
           {/*{profiles.map(profile => <ProfileCard key= {profile.Email} img = {profile.img} Name = {profile.Name} Email = {profile.Email} role = {profile.Role}></ProfileCard>)}*/}

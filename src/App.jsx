@@ -6,10 +6,6 @@ import './styles/App.css'
 import Wrapper from './components/Wrapper.jsx'
 import ProfileForm from './components/ProfileForm.jsx'
 
-import ReginaImage from './assets/regina.jpg'
-import CadyImage from './assets/cady.jpg'
-import KarenImage from './assets/karen.jpg'
-import GretchenImage from './assets/gretchen.jpg'
 
 function App() {
   const [mode, setMode] = useState(false);
@@ -29,10 +25,8 @@ function App() {
     } else {
       setClicked(true);
     }
-
-    
   }
-  const [profiles, setProfiles] = useState([]);
+
   useEffect(() => {
     fetch('https://web.ics.purdue.edu/~fcorbish/CGT390ProfileApp/fetch-data.php')
     .then((res) => res.json())
@@ -45,32 +39,54 @@ function App() {
   const [animation, setAnimation] = useState(false);
 
   //get titles
-  const titles=[...new Set(profiles.map((profile) => profile.title))];
+  const [titles, setTitles] = useState([]);
+  const [title, setTitle] = useState("");
+  const[page, setPage] = useState(1);
+  const[profiles, setProfiles] = useState([]);
+  const[name, setName] = useState("");
+  const[count, setCount] = useState(1);
+  useEffect(() => {
+    fetch("https://web.ics.purdue.edu/~fcorbish/CGT390ProfileApp/get-titles.php")
+    .then((res) => res.json())
+    .then((data) => {
+      setTitles(data.titles);
+    })
+  }, []);
 
-  //get names 
+  useEffect(() => {
+    fetch(`https://web.ics.purdue.edu/~fcorbish/CGT390ProfileApp/fetch-data-with-filter.php?title=${title}&name=${name}&page=${page}&limit=10`)
+    .then((res) => res.json())
+    .then((data) => {
+      setProfiles(data.profiles);
+      setCount(data.count); //likely wrong
+      setPage(data.page);
+    })
+  }, [title, name, page]);
+
+  //get names
   const names=[...new Set(profiles.map((profile) => profile.Name))];
 
-  const [title, setTitle] = useState("");
+  
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
     console.log(filteredProfiles);
-    setAnimation(true);
+    //setAnimation(true);
+    setPage(1);
   };
 
   const handleAnimation = (event) => {
     setAnimation(false);
   }
-
-  const [name, setName] = useState("");
   const handleNameChange = (event) => {
     setName(event.target.value);
-    setAnimation(true);
+    //setAnimation(true);
+    setPage(1);
   }
 
   const handleClear = () => {
     setTitle("");
     setName("");
-    setAnimation(true);
+    setPage(1);
   }
 
   const filteredProfiles = profiles.filter((profile) => {
@@ -117,13 +133,26 @@ function App() {
 
         <div className = "profileCardContainer" style={appStyle.profileCards}>
 
-          {filteredProfiles.map(profile => 
-          <ProfileCard key={profile.id} {...profile} animate={animation} updateAnimate={handleAnimation} darkMode={mode}/>
-          )} 
+          {profiles.map((profile) => (
+          <ProfileCard 
+          key={profile.id} 
+          {...profile}
+           darkMode={mode}/>
+          ))} 
          
           {/*{profiles.map(profile => <ProfileCard key= {profile.Email} img = {profile.img} Name = {profile.Name} Email = {profile.Email} role = {profile.Role}></ProfileCard>)}*/}
 
         </div>
+        {
+          count === 0 && <p>No Profiles Found !</p>
+        }
+        { count > 10 &&  <div className="pagination">
+          <button onClick={() => setPage(page-1)} disabled={page === 1}> 
+            <span className="sr-only">Prev</span> </button>
+          <button onClick={() => setPage(page-1)} disabled={page >= Math.floor(count/limit)}><span className="sr-only">Next</span>  </button>
+        </div>
+        }
+        
       </Wrapper>
       
     </div>

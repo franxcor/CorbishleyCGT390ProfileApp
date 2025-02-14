@@ -1,4 +1,5 @@
 import { useState } from "react";
+import style from '../styles/profileform.module.css';
 const ProfileForm = () => {
   const [data, setData] = useState({ name: "", title: "", email: "", bio: "", image: null });
   const [errors, setErrors] = useState({image: "", general: ""});
@@ -45,13 +46,14 @@ const ProfileForm = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="profileForm">
+    <form onSubmit={handleSubmit} className={style["container"]}>
       <input
         name="name"
         placeholder="Name"
         type="text"
         required
         value={data.name}
+        className={style["biography"]}
         onChange={handleInput}
       ></input>
       <input
@@ -60,6 +62,7 @@ const ProfileForm = () => {
         type="text"
         required
         value={data.title}
+        className={style["biography"]}
         onChange={handleInput}
       ></input>
       <input
@@ -68,11 +71,13 @@ const ProfileForm = () => {
         type="email"
         required
         value={data.email}
+        className={style["biography"]}
         onChange={handleInput}
       ></input>
       <textarea
         name="bio"
         placeholder="Enter a Bio"
+        className={style["biography"]}
         required
         maxLength={200}
         value={data.bio}
@@ -82,7 +87,7 @@ const ProfileForm = () => {
       <label htmlFor="image">Choose a Profile Picture:</label>
       <input type="file" id="image" name="image" required accept="image/png, image/jpeg, image/jpg" onChange={handleInput}/>
       {errors.image && <p>{errors.image}</p>}
-      <button type="submit" disabled={submitting || errors.image !== ""|| data.name  === "" || data.bio  === "" || data.email  === "" || data.title  === "" || data.image===null ? true: false}>Submit</button>
+      <button type="submit" className={style["submit"]} disabled={submitting || errors.image !== ""|| data.name  === "" || data.bio  === "" || data.email  === "" || data.title  === "" || data.image===null ? true: false}>Submit</button>
       {errors.general && <p>{errors.general}</p>}
     </form>
   );

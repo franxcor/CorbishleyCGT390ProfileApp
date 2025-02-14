@@ -9,7 +9,7 @@
     }
 }
 
-.is-entering {
+&.is-entering {
     opacity: 0;
     transform: scale(.9);
     animation: cardEnter .5s forwards; 

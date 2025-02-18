@@ -107,8 +107,8 @@ function App() {
         <About></About>
         <button onClick = {handleClick}>{clicked ? "checked" : "unchecked"}</button>
       </Wrapper>
-      <Wrapper>
-        <ProfileForm></ProfileForm>
+      <Wrapper mode={mode}>
+        <ProfileForm darkMode={mode}></ProfileForm>
       </Wrapper>
       <Wrapper mode={mode}>
         <div className="filter-wrapper" style={{display: 'flex', justifyContent: 'center'}}>
@@ -165,5 +165,6 @@ const appStyle = {
   profileCards : {
     display: 'flex',
     justifyContent: 'center',
+    paddingBottom: '400px',
   }
 }

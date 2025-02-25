@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import ProfileCard from '../components/ProfileCard.jsx'
 import '../styles/App.css'
 import Wrapper from '../components/Wrapper.jsx'
+import { Link } from 'react-router-dom'
 function HomePage() {
   const [mode, setMode] = useState(false);
   const [titles, setTitles] = useState([]);
@@ -92,10 +93,13 @@ function HomePage() {
         <div className = "profileCardContainer" style={appStyle.profileCards}>
 
           {profiles.map((profile) => (
-          <ProfileCard 
+            <Link to={`/profile/${profile.id}`} key={profile.id}>
+            <ProfileCard 
           key={profile.id} 
           {...profile}
            darkMode={mode}/>
+            </Link>
+          
           ))} 
 
         </div>

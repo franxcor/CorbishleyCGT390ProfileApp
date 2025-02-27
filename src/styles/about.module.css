@@ -1,4 +1,7 @@
 .container {
+    &.darkMode {
+        color: white;
+    }
     margin: 0px;
     padding-top: 15px;
 }

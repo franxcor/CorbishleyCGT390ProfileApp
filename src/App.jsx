@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Navbar from './components/Navbar.jsx'
 import './styles/App.css'
-import Wrapper from './components/Wrapper.jsx'
 import HomePage from './pages/HomePage.jsx'
 import AddProfile from './pages/AddProfile.jsx'
 import AboutPage from './pages/AboutPage.jsx'
@@ -11,26 +10,19 @@ import ProfileEditPage from './pages/ProfileEditPage.jsx'
 import ProfileLayoutPage from './pages/ProfileLayoutPage.jsx'
 
 import {HashRouter, Routes, Route} from "react-router-dom";
+import { ModeContext } from './contexts/ModeContext.jsx';
 
 
 function App() {
-  const [mode, setMode] = useState(false);
+  const {mode} = useContext(ModeContext);
 
-  const switchMode = () => {
-    if (mode) {
-      setMode(false);
-    } else {
-      setMode(true)
-    }
-    console.log(mode);
-  }
 
   return (
     <HashRouter>
       <header>
-        <Navbar darkMode={mode} switchMode={switchMode}></Navbar>
+        <Navbar ></Navbar>
       </header>
-      <main >
+      <main className={mode ? "dark" : "light"}>
         <Routes>
           <Route path="/" element={<HomePage/>}/>
           <Route path="/add-profile" element={<AddProfile/>}/>

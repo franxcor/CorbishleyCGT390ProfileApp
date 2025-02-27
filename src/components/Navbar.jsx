@@ -1,17 +1,21 @@
 import React from 'react';
 import style from '../styles/navBar.module.css';
 import {Link} from 'react-router-dom';
+import {useContext} from "react";
+import {ModeContext} from "../contexts/ModeContext";
 
-const Navbar = ({switchMode, darkMode}) => {
+
+const Navbar = () => {
+    const {mode, toggleMode} = useContext(ModeContext);
     return (
-        <div className={`${style["navBarDiv"]} ${darkMode ? style["darkMode"] : ""}`}>
+        <div className={`${style["navBarDiv"]} ${mode === "dark" ? style["darkMode"] : ""}`}>
             <ul className={style["list"]}>
                 <li className={style["listItem"]}><Link to="/">Home</Link></li>
                 <li className={style["listItem"]}><Link to="/add-profile">Add Profile</Link></li>
                 <li className={style["listItem"]}><Link to="/about">About</Link></li>
             </ul>
             
-            <button className={`${style["button"]} ${darkMode ? style["darkMode"] : ""}`} onClick={switchMode}>Switch Mode</button>
+            <button className={`${style["button"]}`} onClick={toggleMode}>{mode ? "Light Mode" : "Dark Mode"}</button>
         </div>
     );
 };

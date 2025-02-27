@@ -1,20 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import About from '../components/About.jsx'
 import '../styles/App.css'
 import Wrapper from '../components/Wrapper.jsx'
 
 function AboutPage() {
-  const [mode, setMode] = useState(false);
+  
   const [clicked, setClicked] = useState(false)
-  const switchMode = () => {
-    if (mode) {
-      setMode(false);
-    } else {
-      setMode(true)
-    }
-    console.log(mode);
-  }
-
   
   const handleClick = () => {
     if (clicked) {
@@ -25,7 +16,7 @@ function AboutPage() {
   }
 
   return (
-      <Wrapper mode={mode}>
+      <Wrapper >
         <About></About>
         <button onClick = {handleClick}>{clicked ? "checked" : "unchecked"}</button>
       </Wrapper>

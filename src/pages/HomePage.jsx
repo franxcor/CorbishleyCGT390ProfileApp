@@ -4,7 +4,6 @@ import '../styles/App.css'
 import Wrapper from '../components/Wrapper.jsx'
 import { Link } from 'react-router-dom'
 function HomePage() {
-  const [mode, setMode] = useState(false);
   const [titles, setTitles] = useState([]);
   const [title, setTitle] = useState("");
   const[page, setPage] = useState(1);
@@ -13,15 +12,6 @@ function HomePage() {
   const[count, setCount] = useState(1);
   const [clicked, setClicked] = useState(false);
 
-
-  const switchMode = () => {
-    if (mode) {
-      setMode(false);
-    } else {
-      setMode(true)
-    }
-    console.log(mode);
-  }
 
   useEffect(() => {
     fetch('https://web.ics.purdue.edu/~fcorbish/CGT390ProfileApp/fetch-data.php')
@@ -74,7 +64,7 @@ function HomePage() {
   })
 
   return (
-      <Wrapper mode={mode}>
+      <Wrapper>
         <div className="filter-wrapper" style={{display: 'flex', justifyContent: 'center'}}>
           <div className="filter-select" style={{padding: '15px'}}>
             <label htmlFor='title-select'>Select a Title:</label>
@@ -97,7 +87,7 @@ function HomePage() {
             <ProfileCard 
           key={profile.id} 
           {...profile}
-           darkMode={mode}/>
+          />
             </Link>
           
           ))} 

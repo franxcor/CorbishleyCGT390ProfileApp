@@ -1,6 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import style from '../styles/editprofileform.module.css';
-const EditForm = ({darkMode, currentProfile = {}}) => {
+import { ModeContext } from "../contexts/ModeContext";
+const EditForm = ({currentProfile = {}}) => {
+
+  const {mode} = useContext(ModeContext);
   const [data, setData] = useState({ name: "", title: "", email: "", bio: "", image: null });
   const [errors, setErrors] = useState({image: "", general: ""});
   const [submitting, setSubmitting] = useState(false);
@@ -64,8 +67,8 @@ const EditForm = ({darkMode, currentProfile = {}}) => {
     }
   };
   return (
-    <div className={`${style["background"]} ${darkMode ? style["darkMode"] : ""}`}>
-      <form onSubmit={handleSubmit} className={`${style["container"]} ${darkMode ? style["darkMode"] : ""}`}>
+    <div className={`${style["background"]} ${mode === "dark" ? style["darkMode"] : ""}`}>
+      <form onSubmit={handleSubmit} className={`${style["container"]} ${mode === "dark" ? style["darkMode"] : ""}`}>
     <input
       name="name"
       placeholder="Name"

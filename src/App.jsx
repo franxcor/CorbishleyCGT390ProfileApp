@@ -8,9 +8,13 @@ import NotFound from './pages/NotFound.jsx'
 import ProfileDetails from './pages/ProfileDetails.jsx'
 import ProfileEditPage from './pages/ProfileEditPage.jsx'
 import ProfileLayoutPage from './pages/ProfileLayoutPage.jsx'
+import RegisterPage from './pages/RegisterPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
 
 import {HashRouter, Routes, Route} from "react-router-dom";
 import { ModeContext } from './contexts/ModeContext.jsx';
+import { AuthProvider } from './contexts/AuthContext.jsx'
+import ProtectedRoute from './contexts/ProtectedRoute.jsx'
 
 
 function App() {
@@ -18,25 +22,30 @@ function App() {
 
 
   return (
-    <HashRouter>
-      <header>
-        <Navbar ></Navbar>
-      </header>
-      <main className={mode ? "dark" : "light"}>
-        <Routes>
-          <Route path="/" element={<HomePage/>}/>
-          <Route path="/add-profile" element={<AddProfile/>}/>
-          <Route path="/about" element={<AboutPage/>}/>
-          <Route path="profile/:id" element={<ProfileLayoutPage/>}>
-            <Route index element={<ProfileDetails/>} />
-            <Route path="edit" element={<ProfileEditPage/>} />
-          </Route>
-          <Route path="*" element={<NotFound/>}/>
-          
-        </Routes>
-      </main>
-      
-    </HashRouter>
+    <AuthProvider>
+      <HashRouter>
+        <header>
+          <Navbar ></Navbar>
+        </header>
+        <main className={mode ? "dark" : "light"}>
+          <Routes>
+            <Route path="/" element={<ProtectedRoute> <HomePage/> </ProtectedRoute>}/>
+            <Route path="/add-profile" element={<ProtectedRoute><AddProfile/> </ProtectedRoute>}/>
+            <Route path="/about" element={<ProtectedRoute><AboutPage/> </ProtectedRoute>}/>
+            <Route path="profile/:id" element={<ProtectedRoute><ProfileLayoutPage/> </ProtectedRoute>}>
+              <Route index element={<ProtectedRoute> <ProfileDetails/> </ProtectedRoute>} />
+              <Route path="edit" element={<ProtectedRoute> <ProfileEditPage/> </ProtectedRoute>} />
+            </Route>
+            <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/register" element={<RegisterPage/>} />
+            <Route path="*" element={<NotFound/>}/>
+            
+          </Routes>
+        </main>
+        
+      </HashRouter>
+    </AuthProvider>
+    
   )
 }
 

@@ -90,7 +90,9 @@ const ProfileForm = () => {
     <label htmlFor="image">Choose a Profile Picture:</label>
     <input type="file" id="image" name="image" required accept="image/png, image/jpeg, image/jpg" onChange={handleInput}/>
     {errors.image && <p>{errors.image}</p>}
-    <button type="submit" className={style["submit"]} disabled={submitting || errors.image !== ""|| data.name  === "" || data.bio  === "" || data.email  === "" || data.title  === "" || data.image===null ? true: false}>Submit</button>
+    <button type="submit" className={style["submit"]} 
+    disabled={submitting || errors.image !== ""|| data.name  === "" || data.bio  === "" || data.email  === "" || data.title  === "" || data.image===null ? true: false}>
+      Submit</button>
     {errors.general && <p>{errors.general}</p>}
   </form></div>
     

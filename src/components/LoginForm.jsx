@@ -1,4 +1,4 @@
-import {useState, useContext, useEffect} from 'react';
+import {useState, useContext, useEffect, useRef, use} from 'react';
 import style from '../styles/profileform.module.css';
 import {ModeContext} from '../contexts/ModeContext';
 import {AuthContext} from '../contexts/AuthContext';
@@ -8,6 +8,7 @@ const LoginForm = ({isRegister = false}) => {
     const {mode} = useContext(ModeContext);
     const {login} = useContext(AuthContext);
     const navigate = useNavigate();
+    const usernameRef = useRef(null);
 
     const [data, setData] = useState({
         username: "",
@@ -18,9 +19,11 @@ const LoginForm = ({isRegister = false}) => {
     const [error, setError] = useState("")
     const [submitting, setSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
+    useEffect(() => {
+        usernameRef.current.focus();
+    }, [])
 
     const handleInput = (e) => {
-        console.log(isRegister)
         setData({...data, [e.target.name]: e.target.value});
     }
     const handleSubmit = async (e) => {
@@ -62,6 +65,7 @@ const LoginForm = ({isRegister = false}) => {
         <div className={`${style["background"]} ${mode === "dark" ? style["darkMode"] : ""}`}>
             <form onSubmit={handleSubmit} className={`${style["container"]} ${mode === "dark" ? style["darkMode"] : ""}`}>
             <input
+                ref={usernameRef}
                 name="username"
                 placeholder="Username"
                 type="text"

@@ -1,51 +1,21 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useEffect, useReducer, useRef, useLayoutEffect } from 'react'
 import ProfileCard from '../components/ProfileCard.jsx'
 import '../styles/App.css'
 import Wrapper from '../components/Wrapper.jsx'
 import { Link } from 'react-router-dom';
-import { homeReducer, initialState } from '../reducers/homeReducer.js';
+import useHomepageAPI from '../hooks/homepageAPI.js';
 
 function HomePage() {
-  const [state, dispatch] = useReducer(homeReducer, initialState);
+  const {state, dispatch} = useHomepageAPI();
   const {titles, title, page, name, profiles, count} = state;
-  /*
-  const [titles, setTitles] = useState([]);
-  const [title, setTitle] = useState("");
-  const[page, setPage] = useState(1);
-  const[name, setName] = useState("");
-  const[profiles, setProfiles] = useState([]);
-  const[count, setCount] = useState(1);
-  */
+  const [zoom, setZoom] = useState(1);
+  const divRef = useRef();
 
-
-/*
-  useEffect(() => {
-    fetch('https://web.ics.purdue.edu/~fcorbish/CGT390ProfileApp/fetch-data.php')
-    .then((res) => res.json())
-    .then((data) => {
-      dispatch({type: "FETCH_PROFILES", payload: data.titles})
-    });
+  useLayoutEffect(() => {
+    if (divRef.current.clientWidth > 1000) {
+      setZoom(1.5)
+    }
   }, []);
-  */
-  
-  useEffect(() => {
-    fetch("https://web.ics.purdue.edu/~fcorbish/CGT390ProfileApp/get-titles.php")
-    .then((res) => res.json())
-    .then((data) => {
-      //setTitles(data.titles);
-      dispatch({type: "SET_TITLES", payload: data.titles})
-    });
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      `https://web.ics.purdue.edu/~fcorbish/CGT390ProfileApp/fetch-data-with-filter.php?title=${title}&name=${name}&page=${page}&limit=10`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch({ type: "FETCH_DATA", payload: data });
-      });
-  }, [title, name, page]);
 
   const handleTitleChange = (event) => {
     dispatch({type: "SET_TITLE", payload: event.target.value})
@@ -61,11 +31,6 @@ function HomePage() {
     dispatch({type: "CLEAR_FILTERS"})
   }
 
-  /*
-  const filteredProfiles = profiles.filter((profile) => {
-    return (title === "" || profile.title === title) && (profile.name.toLowerCase().includes(name.toLowerCase())); //one liner
-  })
-    */
   return (
       <Wrapper>
         <div className="filter-wrapper" style={{display: 'flex', justifyContent: 'center'}}>
@@ -83,11 +48,11 @@ function HomePage() {
           <button onClick={handleClear} style={{margin: '15px', padding: '5px'}}> Clear </button>
         </div>
 
-        <div className = "profileCardContainer" style={appStyle.profileCards}>
+        <div ref={divRef} className = "profileCardContainer" style={appStyle.profileCards}>
 
           {profiles.map((profile) => (
             <Link to={`/profile/${profile.id}`} key={profile.id}>
-            <ProfileCard {...profile}/>
+            <ProfileCard {...profile} zoom={zoom} />
             </Link>
           
           ))} 

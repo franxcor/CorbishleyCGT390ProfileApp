@@ -1,65 +1,17 @@
-import {useState, useContext, useEffect, useRef, use} from 'react';
-import style from '../styles/profileform.module.css';
+import {useContext, useRef, useLayoutEffect} from 'react';
 import {ModeContext} from '../contexts/ModeContext';
-import {AuthContext} from '../contexts/AuthContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import style from '../styles/profileform.module.css';
+import useAuthForm from '../hooks/authFormHook';
 
 const LoginForm = ({isRegister = false}) => {
     const {mode} = useContext(ModeContext);
-    const {login} = useContext(AuthContext);
-    const navigate = useNavigate();
+    const {data, error, submitting, successMessage, handleInput, handleSubmit} = useAuthForm(isRegister);
     const usernameRef = useRef(null);
 
-    const [data, setData] = useState({
-        username: "",
-        password: "",
-        email: "",
-    });
 
-    const [error, setError] = useState("")
-    const [submitting, setSubmitting] = useState(false);
-    const [successMessage, setSuccessMessage] = useState("");
-    useEffect(() => {
+    useLayoutEffect(() => {
         usernameRef.current.focus();
     }, [])
-
-    const handleInput = (e) => {
-        setData({...data, [e.target.name]: e.target.value});
-    }
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setSubmitting(true);
-        const formData = new FormData();
-        formData.append("username", data.username.trim());
-        formData.append("password", data.password.trim());
-        if (isRegister) formData.append("email", data.email.trim());
-        formData.append("action", isRegister ? 'register' : 'login');
-        try {
-            const response = await fetch(`https://web.ics.purdue.edu/~fcorbish/CGT390ProfileApp/auth.php`, {
-                method: "POST",
-                body: formData
-            });
-            const data = await response.json();
-            if(data.success) {
-                setData({username: "", password: "", email: ""});
-                setSuccessMessage(data.message);
-                setError("");
-                login();
-                navigate("/")
-            } else {
-                console.log(error)
-                setError(data.error);
-                setSuccessMessage("");
-            }
-        } catch (error){
-            setError(error);
-            setSuccessMessage("");
-        } finally {
-            setSubmitting(false);
-        }
-        
-    }
-
 
     return (
         <div className={`${style["background"]} ${mode === "dark" ? style["darkMode"] : ""}`}>
@@ -98,8 +50,9 @@ const LoginForm = ({isRegister = false}) => {
                 <button type="submit" className={style["submit"]} 
                 disabled={submitting || data.username === "" || data.password === ""  || (isRegister && data.email.trim() === "") ? true: false}>
                     Submit</button>
-                {/* error && <p>{error}</p> */}
-                {/* successMessage && <p>{successMessage}</p> */}
+                {error.general && <p>{error.general}</p>}
+                {successMessage.general && <p>{successMessage.general}</p>}
+                
             </form>
         </div>
     )

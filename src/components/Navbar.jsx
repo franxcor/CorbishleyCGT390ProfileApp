@@ -2,13 +2,13 @@ import React from 'react';
 import style from '../styles/navBar.module.css';
 import {Link} from 'react-router-dom';
 import {useContext} from "react";
-import {ModeContext} from "../contexts/ModeContext";
+import {useMode} from "../contexts/ModeContext";
 import { AuthContext } from '../contexts/AuthContext';
 
 
 const Navbar = () => {
     const {isLogin, logout} = useContext(AuthContext);
-    const {mode, toggleMode} = useContext(ModeContext);
+    const {mode, toggleMode} = useMode();
     return (
         <div className={`${style["navBarDiv"]} ${mode === "dark" ? style["darkMode"] : ""}`}>
             <ul className={style["list"]}>

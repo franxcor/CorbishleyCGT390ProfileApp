@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar.jsx'
 import './styles/App.css'
 import HomePage from './pages/HomePage.jsx'
@@ -20,7 +20,7 @@ import ProtectedRoute from './contexts/ProtectedRoute.jsx'
 function App() {
   const {mode} = useContext(ModeContext);
 
-
+  const LazyComponent = lazy(() => import("./pages/ProfileDetails.jsx"));
   return (
     <AuthProvider>
       <HashRouter>
@@ -33,7 +33,7 @@ function App() {
             <Route path="/add-profile" element={<ProtectedRoute><AddProfile/> </ProtectedRoute>}/>
             <Route path="/about" element={<ProtectedRoute><AboutPage/> </ProtectedRoute>}/>
             <Route path="profile/:id" element={<ProtectedRoute><ProfileLayoutPage/> </ProtectedRoute>}>
-              <Route index element={<ProtectedRoute> <ProfileDetails/> </ProtectedRoute>} />
+              <Route index element={<Suspense fallback = {<div>Loading ... </div>}><LazyComponent/></Suspense>} />
               <Route path="edit" element={<ProtectedRoute> <ProfileEditPage/> </ProtectedRoute>} />
             </Route>
             <Route path="/login" element={<LoginPage/>}/>

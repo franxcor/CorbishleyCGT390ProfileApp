@@ -1,9 +1,10 @@
-import { useState, useEffect, useReducer, useRef, useLayoutEffect } from 'react'
+import { useState, useEffect, useReducer, useRef, useLayoutEffect, useCallback, useMemo } from 'react'
 import ProfileCard from '../components/ProfileCard.jsx'
 import '../styles/App.css'
 import Wrapper from '../components/Wrapper.jsx'
 import { Link } from 'react-router-dom';
 import useHomepageAPI from '../hooks/homepageAPI.js';
+import Filters from '../components/Filters.jsx';
 
 function HomePage() {
   const {state, dispatch} = useHomepageAPI();
@@ -17,46 +18,39 @@ function HomePage() {
     }
   }, []);
 
-  const handleTitleChange = (event) => {
+  const handleTitleChange = useCallback((event) => {
     dispatch({type: "SET_TITLE", payload: event.target.value})
 
-  };
+  }, []);
 
-  const handleNameChange = (event) => {
+  const handleNameChange = useCallback((event) => {
     dispatch({type: "SET_NAME", payload: event.target.value})
 
-  }
+  }, []);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     dispatch({type: "CLEAR_FILTERS"})
-  }
+  }, []);
+
+  const titlesValue = useMemo(() => titles, [titles]);
 
   return (
       <Wrapper>
-        <div className="filter-wrapper" style={{display: 'flex', justifyContent: 'center'}}>
-          <div className="filter-select" style={{padding: '15px'}}>
-            <label htmlFor='title-select'>Select a Title:</label>
-            <select id="title-select" onChange={handleTitleChange} value={title}>
-              <option value=""> ALL </option>
-              {titles.map((title)=> (<option key={title} value={title}>{title}</option>))}
-            </select>
-          </div>
-          <div className="filter-search" style={{padding: '15px'}}>
-            <label htmlFor='name-search'>Search by Name:</label>
-            <input onChange={handleNameChange} placeholder='search for a name' value={name}/>
-          </div>
-          <button onClick={handleClear} style={{margin: '15px', padding: '5px'}}> Clear </button>
-        </div>
-
+        <Filters
+        titles={titlesValue}
+        title={title}
+        name = {name}
+        handleTitleChange={handleTitleChange}
+        handleNameChange = {handleNameChange}
+        handleClear = {handleClear}
+        />
         <div ref={divRef} className = "profileCardContainer" style={appStyle.profileCards}>
-
-          {profiles.map((profile) => (
-            <Link to={`/profile/${profile.id}`} key={profile.id}>
-            <ProfileCard {...profile} zoom={zoom} />
-            </Link>
-          
-          ))} 
-
+                {profiles.map((profile) => (
+                    <Link to={`/profile/${profile.id}`} key={profile.id}>
+                    <ProfileCard {...profile} zoom={zoom} />
+                    </Link>
+                
+                ))}
         </div>
         {
           count === 0 && <p>No Profiles Found !</p>

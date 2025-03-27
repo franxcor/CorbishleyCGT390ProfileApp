@@ -1,24 +1,24 @@
-import { useState, useEffect, useContext, lazy, Suspense } from 'react'
+import {lazy, Suspense } from 'react'
 import Navbar from './components/Navbar.jsx'
 import './styles/App.css'
 import HomePage from './pages/HomePage.jsx'
 import AddProfile from './pages/AddProfile.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import NotFound from './pages/NotFound.jsx'
-import ProfileDetails from './pages/ProfileDetails.jsx'
 import ProfileEditPage from './pages/ProfileEditPage.jsx'
 import ProfileLayoutPage from './pages/ProfileLayoutPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 
 import {HashRouter, Routes, Route} from "react-router-dom";
-import { ModeContext } from './contexts/ModeContext.jsx';
 import { AuthProvider } from './contexts/AuthContext.jsx'
 import ProtectedRoute from './contexts/ProtectedRoute.jsx'
 
+import { useSelector } from 'react-redux'
+
 
 function App() {
-  const {mode} = useContext(ModeContext);
+  const mode = useSelector((state) => state.mode.mode);
 
   const LazyComponent = lazy(() => import("./pages/ProfileDetails.jsx"));
   return (

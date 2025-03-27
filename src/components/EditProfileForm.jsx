@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import style from '../styles/editprofileform.module.css';
-import { ModeContext } from "../contexts/ModeContext";
 import editForm from "../hooks/editFormHook";
+import { useSelector } from "react-redux";
 
 const EditForm = ({currentProfile = {}}) => {
 
   const {data, errors, submitting, successMessage, handleInput, handleSubmit} = editForm(currentProfile);
-  const {mode} = useContext(ModeContext);
+  const mode = useSelector((state => state.mode.mode))
 
   
   return (

@@ -1,10 +1,10 @@
+import { useSelector } from "react-redux";
 import style from "../styles/about.module.css";
-import { ModeContext } from '../contexts/ModeContext.jsx'
 import { useContext } from "react";
 
 
 const About = () => {
-    const {mode} = useContext(ModeContext);
+    const mode = useSelector((state => state.mode.mode));
     return (
         <div className={`${style["container"]} ${mode === "dark" ? style["darkMode"] : ""}`}>
             <h1> About</h1>

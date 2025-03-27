@@ -2,9 +2,10 @@ import {useContext, useRef, useLayoutEffect} from 'react';
 import {ModeContext} from '../contexts/ModeContext';
 import style from '../styles/profileform.module.css';
 import useAuthForm from '../hooks/authFormHook';
+import { useSelector } from 'react-redux';
 
 const LoginForm = ({isRegister = false}) => {
-    const {mode} = useContext(ModeContext);
+    const mode = useSelector((state => state.mode.mode))
     const {data, error, submitting, successMessage, handleInput, handleSubmit} = useAuthForm(isRegister);
     const usernameRef = useRef(null);
 

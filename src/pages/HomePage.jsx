@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer, useRef, useLayoutEffect, useCallback, useMemo } from 'react'
+import { useState, useRef, useLayoutEffect, useCallback, useMemo } from 'react'
 import ProfileCard from '../components/ProfileCard.jsx'
 import '../styles/App.css'
 import Wrapper from '../components/Wrapper.jsx'

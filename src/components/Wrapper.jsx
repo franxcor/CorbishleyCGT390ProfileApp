@@ -1,9 +1,9 @@
 import style from '../styles/wrapper.module.css';
 import { useContext } from 'react';
 import { ModeContext } from '../contexts/ModeContext';
-// using to replace other divs
+import { useSelector } from 'react-redux';
 const Wrapper = ({children}) => {
-    const {mode} = useContext(ModeContext);
+    const mode = useSelector((state => state.mode.mode));
     return <div className={`${style["section"]} ${mode === 'dark' ? style["darkMode"]: ""}`}> <div className={style["container"]}> {children} </div> </div>
 }
 

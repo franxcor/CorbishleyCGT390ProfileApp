@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import style from '../styles/profileform.module.css';
-import { ModeContext } from "../contexts/ModeContext";
+import { useSelector } from "react-redux";
 const ProfileForm = () => {
-  const {mode} = useContext(ModeContext);
+  const mode = useSelector((state => state.mode.mode))
   const [data, setData] = useState({ name: "", title: "", email: "", bio: "", image: null });
   const [errors, setErrors] = useState({image: "", general: ""});
   const [submitting, setSubmitting] = useState(false);

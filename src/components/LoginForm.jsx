@@ -1,5 +1,4 @@
 import {useContext, useRef, useLayoutEffect} from 'react';
-import {ModeContext} from '../contexts/ModeContext';
 import style from '../styles/profileform.module.css';
 import useAuthForm from '../hooks/authFormHook';
 import { useSelector } from 'react-redux';
